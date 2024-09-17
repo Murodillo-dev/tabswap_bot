@@ -1,0 +1,73 @@
+.coinCount {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.counter {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: -15px;
+}
+.counter svg {
+  margin-top: -20px;
+}
+.coinCount {
+  font-family: Jomhuria;
+  font-size: 96px;
+  font-weight: 400;
+  color: white;
+}
+
+.coinClick {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 100px;
+}
+.coinClick button {
+  background-color: transparent;
+  border: none;
+}
+
+.coinClick img {
+  width: 248px;
+  height: 245px;
+}
+
+.clickInfo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 35px;
+}
+.clickInfo h2 {
+  font-family: Jomhuria;
+  font-size: 36px;
+  font-weight: 400;
+  line-height: 36px;
+  text-align: left;
+  color: white;
+  margin-top: 10px;
+}
+.span2 {
+  font-size: 30px;
+}
+.status {
+  margin-top: -20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.status span {
+  font-family: Istok Web;
+  font-size: 20px;
+  font-weight: 700;
+  text-align: left;
+  color: #8c8787;
+}
+.fa-chevron-right {
+  font-size: 24px;
+  color: #8c8787;
+}

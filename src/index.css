@@ -1,0 +1,86 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+@font-face {
+  font-family: 'Istok Web';
+  src: url('Fonts/IstokWeb-Regular.ttf');
+}
+@font-face {
+  font-family: 'Kavivanar';
+  src: url('Fonts/Kavivanar-Regular.ttf');
+}
+@font-face {
+  font-family: 'Jomhuria';
+  src: url('Fonts/Jomhuria-Regular.ttf');
+}
+@font-face {
+  font-family: 'JejuGothic';
+  src: url('Fonts/JejuGothic-Regular.ttf');
+}
+@font-face {
+  font-family: 'Hina Mincho';
+  src: url('Fonts/HinaMincho-Regular.ttf');
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('Fonts/JetBrainsMono-Regular.ttf');
+}
+html,
+body {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  touch-action: manipulation;
+  touch-action: none;
+}
+.container {
+  max-width: 430px;
+  width: 100%;
+  height: 100vh;
+  padding: 40px 20px 20px 20px;
+  background: linear-gradient(
+    45deg,
+    #191b30 20%,
+    #1a1c30 30%,
+    #887555 50%,
+    #1a1c30 80%,
+    #191b30 100%
+  );
+  box-sizing: border-box;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #1a1c30;
+}
+
+.category {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.category a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 11px 15px 5px 15px;
+  background-color: #303b58;
+  text-decoration: none;
+  font-family: Jomhuria;
+  border-radius: 15px;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 24px;
+  color: white;
+}
+.category a span {
+  margin-top: 5px;
+}
+.category a .selected {
+  background-color: #425ba5;
+}
