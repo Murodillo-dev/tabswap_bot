@@ -22,9 +22,20 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 10px;
   margin-top: -15px;
 }
+.include {
+  min-width: 100px;
+  /* background-color: green; */
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+}
+.include span{
+
+}
+
 .counter span {
 }
 .counter svg {
@@ -46,9 +57,10 @@
 .coinClick button {
   background-color: transparent;
   border: none;
-  background-color: red;
+  /* background-color: red; */
   position: relative;
 }
+
 .effect {
   position: absolute;
   top: 100px;
@@ -60,7 +72,7 @@
   animation-iteration-count: 1;
   font-size: 45px;
 }
-.coinClick h1{
+.coinClick h1 {
   /* position: absolute;
   top: 100px;
   left: 210px; */
