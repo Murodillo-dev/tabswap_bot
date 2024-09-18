@@ -55,7 +55,7 @@
   opacity: 0;
   color: white;
   animation-name: clickEffect;
-  animation-duration: 0.3s;
+  animation-duration: 0.5s;
   animation-iteration-count: 1;
   font-size: 45px;
 }

@@ -32,7 +32,7 @@ const Earn = () => {
     }, 10);
 
     if (navigator.vibrate) {
-        navigator.vibrate(200); // 200 millisekund davomida vibratsiya
+        navigator.vibrate(40); // 200 millisekund davomida vibratsiya
     }
     setCount((prevCount) => prevCount + 1); // `setCount` orqali qiymatni oshirish va rerender qilish
     setCharge(charge - 1);
