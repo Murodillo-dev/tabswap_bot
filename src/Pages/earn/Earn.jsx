@@ -12,31 +12,44 @@ const Earn = () => {
   useEffect(() => {
     const savedCount = localStorage.getItem("count");
     if (savedCount) {
-      setCount(parseInt(savedCount)); // `setCount` orqali qiymatni yangilash
+      setCount(parseInt(savedCount));
     }
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("count", count); // qiymatni saqlash
+    localStorage.setItem("count", count);
   }, [count]);
 
-  const clickHandler = () => {
+  const touchStartRef = useRef(0);
+
+  const handleTouchStart = (event) => {
+    if (event.touches.length > 1) {
+      console.log("Ko'p barmoq bilan bosish: ", event.touches.length);
+    }
+    touchStartRef.current = event.touches.length;
+  };
+
+  const handleTouchEnd = (event) => {
+    // Barmoq ko'tarilganini aniqlash
+    if (event.touches.length === 0) {
+      console.log("Barmoq ko'tarildi");
+      // Barmoq ko'tarilganini boshqarish uchun kod yozing
+    }
+
     let effect = document.querySelector(".coinClick h1");
-
-    // Avval `effect` klassini olib tashlaymiz, keyin yana qo'shamiz.
     effect.classList.remove("effect");
-
-    // Browser qayta ishlash imkonini berish uchun qisqa timeout
     setTimeout(() => {
       effect.classList.add("effect");
     }, 10);
 
     if (navigator.vibrate) {
-        navigator.vibrate(40); // 200 millisekund davomida vibratsiya
+      navigator.vibrate(40);
     }
-    setCount((prevCount) => prevCount + 1); // `setCount` orqali qiymatni oshirish va rerender qilish
+    setCount((prevCount) => prevCount + 1);
     setCharge(charge - 1);
   };
+
+  const clickHandler = () => {};
 
   const sendDataToServer = () => {
     const savedCount = localStorage.getItem("count");
@@ -65,6 +78,7 @@ const Earn = () => {
       window.removeEventListener("beforeunload", handleBeforeUnload);
     };
   }, []);
+
   return (
     <div className="earn">
       <div className="coinCount">
@@ -126,7 +140,11 @@ const Earn = () => {
       </div>
 
       <div className="coinClick">
-        <button onClick={clickHandler}>
+        <button
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+          onClick={clickHandler}
+        >
           <svg
             width="249"
             height="246"
