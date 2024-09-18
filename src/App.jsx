@@ -8,8 +8,9 @@ import Tasks from './Pages/tasks/Tasks'
 
 const App = () => {
   return (
-    <div className='container'>
-      <BrowserRouter>
+    <BrowserRouter>
+
+      <div className='container'>
 
         <Routes>
           <Route path='frens' element={<Frens />} />
@@ -18,6 +19,7 @@ const App = () => {
           <Route path='boost' element={<Boots />} />
           <Route path='stats' element={<Stats />} />
         </Routes>
+
 
         <div className='category'>
           <NavLink to="frens">
@@ -102,8 +104,8 @@ const App = () => {
           </NavLink>
         </div>
 
-      </BrowserRouter>
-    </div>
+      </div>
+    </BrowserRouter>
   )
 }
 

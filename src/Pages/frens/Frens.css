@@ -1,0 +1,69 @@
+.header {
+  height: 70vh;
+}
+.userInfo {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.userInfo h1 {
+  font-family: JejuGothic;
+  font-size: 48px;
+  font-weight: 400;
+  line-height: 52.08px;
+  text-align: left;
+  color: white;
+}
+.userLink,
+.channel {
+  height: 68vh;
+  padding: 0 18px;
+  box-sizing: border-box;
+  margin-top: 10px;
+  overflow: auto;
+}
+.invites {
+  width: 100%;
+  padding: 15px 20px;
+  box-sizing: border-box;
+  background-color: #303b58;
+  border-radius: 15px;
+  margin-top: 10px;
+}
+.invites label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.invites label span {
+  font-family: JejuGothic;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 26.04px;
+  text-align: left;
+  color: white;
+}
+.copy {
+  padding: 8px 11px;
+  background-color: #001eff;
+  font-family: JejuGothic;
+  font-size: 13px;
+  font-weight: 400;
+  border: none;
+  border-radius: 8px;
+  line-height: 13.02px;
+  text-align: left;
+  color: white;
+}
+.invites a {
+  display: block;
+  font-family: JejuGothic;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 15.19px;
+  text-align: left;
+  color: #8c8787;
+  margin-top: 30px;
+  text-decoration: none;
+}

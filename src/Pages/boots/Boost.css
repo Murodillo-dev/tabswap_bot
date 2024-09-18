@@ -1,0 +1,99 @@
+@font-face {
+  font-family: "Istok Web";
+  src: url("../../Fonts/IstokWeb-Regular.ttf");
+}
+@font-face {
+  font-family: "Kavivanar";
+  src: url("../../Fonts/Kavivanar-Regular.ttf");
+}
+@font-face {
+  font-family: "Jomhuria";
+  src: url("../../Fonts/Jomhuria-Regular.ttf");
+}
+@font-face {
+  font-family: "JejuGothic";
+  src: url("../../Fonts/JejuGothic-Regular.ttf");
+}
+@font-face {
+  font-family: "Hina Mincho";
+  src: url("../../Fonts/HinaMincho-Regular.ttf");
+}
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("../../Fonts/JetBrainsMono-Regular.ttf");
+}
+.boots{
+    padding: 0;
+}
+.group {
+  display: flex;
+  margin-top: 10px;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.groupLeft,
+.groupRight {
+  padding: 40px 15px;
+  height: 0;
+  background-color: #303b58;
+  border-radius: 10px;
+  display: flex;
+  gap: 15px;
+  justify-content: space-between;
+  align-items: center;
+}
+.tappingRight {
+  display: flex;
+  flex-direction: column;
+}
+.tappingRight h1 {
+  font-family: Kavivanar;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 23.71px;
+  text-align: left;
+  color: white;
+}
+.tappingRight label {
+  font-family: Jomhuria;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 24px;
+  text-align: left;
+  color: white;
+}
+.share {
+  font-family: Istok Web;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  text-align: left;
+  color: #8c8787;
+  margin-bottom: 20px;
+}
+.booster {
+  font-family: Jomhuria;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 24px;
+  text-align: left;
+  color: white;
+}
+.multitap {
+  margin-top: 0;
+}
+.seperate {
+  width: 2.5px;
+  height: 18px;
+  margin-left: 10px;
+  background-color: #8c8787;
+}
+.level {
+  font-family: Hina Mincho !important;
+  font-size: 14px !important;
+  font-weight: 400;
+  text-align: left;
+  color: #8c8787 !important;
+  margin-top: -1px !important;
+}

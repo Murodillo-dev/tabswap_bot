@@ -1,0 +1,18 @@
+.voucher {
+  font-family: JetBrains Mono;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 26.4px;
+  text-align: left;
+  color: #8c8787;
+}
+.ten {
+  font-family: JetBrains Mono;
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 42.24px;
+  text-align: left;
+  color: white;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
