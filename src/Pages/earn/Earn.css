@@ -46,12 +46,12 @@
 .coinClick button {
   background-color: transparent;
   border: none;
-  position: relative;
+  /* position: relative; */
 }
 .effect {
-  position: absolute;
+  /* position: absolute;
   top: 100px;
-  left: 110px;
+  left: 110px; */
   opacity: 0;
   color: white;
   animation-name: clickEffect;

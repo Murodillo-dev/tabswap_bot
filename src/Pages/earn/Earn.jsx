@@ -8,6 +8,7 @@ const Earn = () => {
     parseInt(localStorage.getItem("count")) || 0
   );
   const [charge, setCharge] = useState(500);
+  const [touchPosition, setTouchPosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
     const savedCount = localStorage.getItem("count");
@@ -30,12 +31,13 @@ const Earn = () => {
   };
 
   const handleTouchEnd = (event) => {
-    // Barmoq ko'tarilganini aniqlash
-    if (event.touches.length === 0) {
-      console.log("Barmoq ko'tarildi");
-      // Barmoq ko'tarilganini boshqarish uchun kod yozing
+    if (event.touches.length > 0) {
+      const touch = event.touches[0];
+      setTouchPosition({
+        x: touch.clientX,
+        y: touch.clientY,
+      });
     }
-
     let effect = document.querySelector(".coinClick h1");
     effect.classList.remove("effect");
     setTimeout(() => {
@@ -194,7 +196,17 @@ const Earn = () => {
               </linearGradient>
             </defs>
           </svg>
-          <h1>1</h1>
+          <h1
+            style={{
+              position: "absolute",
+              left: `${touchPosition.x}px`,
+              top: `${touchPosition.y}px`,
+              transform: "translate(-50%, -50%)",
+              pointerEvents: "none", // Kliklarga javob bermasligi uchun
+            }}
+          >
+            1
+          </h1>
         </button>
 
         <div className="clickInfo">
