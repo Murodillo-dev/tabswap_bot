@@ -1,21 +1,52 @@
-import React, { useEffect, useState } from 'react'
+import axios from 'axios'
+import React, { useEffect, useRef, useState } from 'react'
 import './Earn.css'
 
 const Earn = () => {
+    const [url, setUrl] = useState('http://localhost:3000/coin');
+    const [count, setCount] = useState(parseInt(localStorage.getItem('count')) || 0);
 
-    const [count, setCont] = useState(0)
-    function clickHandler() {
-        setCont(count + 1)
-        localStorage.setItem('count', count)
-    }
-    
     useEffect(() => {
-        const savedCount = localStorage.getItem('count')
-        setCont(savedCount)
-    }, [])
+        const savedCount = localStorage.getItem('count');
+        if (savedCount) {
+            setCount(parseInt(savedCount)); // `setCount` orqali qiymatni yangilash
+        }
+    }, []);
 
+    useEffect(() => {
+        localStorage.setItem('count', count); // qiymatni saqlash
+    }, [count]);
 
+    const clickHandler = () => {
+        setCount(prevCount => prevCount + 1); // `setCount` orqali qiymatni oshirish va rerender qilish
+    };
 
+    const sendDataToServer = () => {
+        const savedCount = localStorage.getItem('count');
+        if (savedCount) {
+            axios.post(url, {
+                coinCount: parseInt(savedCount),
+            })
+                .then(response => {
+                    console.log("Data successfully sent:", response.data);
+                })
+                .catch(error => {
+                    console.error("Error sending data:", error);
+                });
+        }
+    };
+
+    useEffect(() => {
+        const handleBeforeUnload = (event) => {
+            sendDataToServer();
+        };
+
+        window.addEventListener('beforeunload', handleBeforeUnload);
+
+        return () => {
+            window.removeEventListener('beforeunload', handleBeforeUnload);
+        };
+    }, []);
     return (
         <div className='earn'>
             <div className="coinCount">
@@ -40,7 +71,7 @@ const Earn = () => {
                         </defs>
                     </svg>
 
-                    <span className="coinCount">{count}</span>
+                    <span className="coinCount">{count > 0 ? count : 0}</span>
                 </div>
 
                 <div className="status">

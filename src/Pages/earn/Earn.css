@@ -5,10 +5,17 @@
 }
 
 .counter {
+  /* background-color: red; */
+  width: 100%;
   display: flex;
+  justify-content: center;
   align-items: center;
   gap: 10px;
   margin-top: -15px;
+}
+.counter span{
+  width: 100px;
+  background-color: blue;
 }
 .counter svg {
   margin-top: -20px;
