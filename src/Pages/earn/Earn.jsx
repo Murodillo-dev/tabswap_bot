@@ -21,37 +21,24 @@ const Earn = () => {
     localStorage.setItem("count", count);
   }, [count]);
 
-  const touchStartRef = useRef(0);
-
-  const handleTouchStart = (event) => {
-    if (event.touches.length > 1) {
-      console.log("Ko'p barmoq bilan bosish: ", event.touches.length);
-    }
-    touchStartRef.current = event.touches.length;
-  };
-
   const handleTouchEnd = (event) => {
-    if (event.touches.length > 0) {
-      const touch = event.touches[0];
-      setTouchPosition({
-        x: touch.clientX,
-        y: touch.clientY,
-      });
-    }
+    setTouchPosition({
+      x: event.changedTouches[0].clientX,
+      y: event.changedTouches[0].clientY,
+    });
+    console.log(event.changedTouches[0].clientX);
+    console.log(event.changedTouches[0].clientY);
     let effect = document.querySelector(".coinClick h1");
     effect.classList.remove("effect");
     setTimeout(() => {
       effect.classList.add("effect");
     }, 10);
-
     if (navigator.vibrate) {
       navigator.vibrate(40);
     }
     setCount((prevCount) => prevCount + 1);
     setCharge(charge - 1);
   };
-
-  const clickHandler = () => {};
 
   const sendDataToServer = () => {
     const savedCount = localStorage.getItem("count");
@@ -142,11 +129,7 @@ const Earn = () => {
       </div>
 
       <div className="coinClick">
-        <button
-          onTouchStart={handleTouchStart}
-          onTouchEnd={handleTouchEnd}
-          onClick={clickHandler}
-        >
+        <button onTouchEnd={handleTouchEnd}>
           <svg
             width="249"
             height="246"
