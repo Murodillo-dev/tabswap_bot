@@ -53,7 +53,7 @@ const Boost = () => {
 
                 <div className="tappingRight">
                   <h1>Tapping Guru</h1>
-                  <label for="">
+                  <label >
                     <span>3</span>/<span>3</span>
                   </label>
                 </div>
@@ -69,7 +69,7 @@ const Boost = () => {
                 </div>
                 <div className="tappingRight">
                   <h1>Tapping Guru</h1>
-                  <label for="">
+                  <label >
                     <span>3</span>/<span>3</span>
                   </label>
                 </div>
@@ -177,7 +177,7 @@ const Boost = () => {
                 <div className="left">
                   <svg width="31" height="44" viewBox="0 0 31 44" fill="none"
                     xmlns="http://www.w3.org/2000/svg">
-                    <g clip-path="url(#clip0_472_98)">
+                    <g clipPath="url(#clip0_472_98)">
                       <path
                         d="M0 25.1423H14.3603L9.36747 44L31.2608 18.8577H16.9005L21.8824 0L0 25.1423Z"
                         fill="#FBD772" />

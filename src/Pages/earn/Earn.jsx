@@ -1,7 +1,21 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './Earn.css'
 
 const Earn = () => {
+
+    const [count, setCont] = useState(0)
+    function clickHandler() {
+        setCont(count + 1)
+        localStorage.setItem('count', count)
+    }
+    
+    useEffect(() => {
+        const savedCount = localStorage.getItem('count')
+        setCont(savedCount)
+    }, [])
+
+
+
     return (
         <div className='earn'>
             <div className="coinCount">
@@ -26,7 +40,7 @@ const Earn = () => {
                         </defs>
                     </svg>
 
-                    <span className="coinCount">50</span>
+                    <span className="coinCount">{count}</span>
                 </div>
 
                 <div className="status">
@@ -37,7 +51,7 @@ const Earn = () => {
             </div>
 
             <div className="coinClick">
-                <button>
+                <button onClick={clickHandler}>
                     <svg width="249" height="246" viewBox="0 0 249 246" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <ellipse cx="124.422" cy="122.508" rx="124.422" ry="122.508" fill="#EFC269" />
                         <path d="M238.771 122.507C238.771 184.597 187.583 234.944 124.42 234.944C61.258 234.944 10.0693 184.597 10.0693 122.507C10.0693 60.4181 61.258 10.0706 124.42 10.0706C187.583 10.0706 238.771 60.4181 238.771 122.507Z" fill="url(#paint0_linear_438_46)" stroke="url(#paint1_linear_438_46)" />
