@@ -9,7 +9,9 @@ const Earn = () => {
   );
   const [charge, setCharge] = useState(500);
   const [touchPosition, setTouchPosition] = useState({ x: 0, y: 0 });
+  const [touchPositions, setTouchPositions] = useState([]);
 
+  //getItem from localStorage
   useEffect(() => {
     const savedCount = localStorage.getItem("count");
     if (savedCount) {
@@ -17,10 +19,12 @@ const Earn = () => {
     }
   }, []);
 
+  //setItem to localStorage
   useEffect(() => {
     localStorage.setItem("count", count);
   }, [count]);
 
+  //ekran bosilganda
   const handleTouchEnd = (event) => {
     setTouchPosition({
       x: event.changedTouches[0].clientX - 100,
@@ -41,6 +45,7 @@ const Earn = () => {
     setCharge(charge - 1);
   };
 
+  //database ga malumot jonatish
   const sendDataToServer = () => {
     const savedCount = localStorage.getItem("count");
     if (savedCount) {
@@ -57,6 +62,7 @@ const Earn = () => {
     }
   };
 
+  //ekran yopinga ishlashdigon funksiya
   useEffect(() => {
     const handleBeforeUnload = (event) => {
       sendDataToServer();
