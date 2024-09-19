@@ -9,7 +9,6 @@ const Earn = () => {
   );
   const [charge, setCharge] = useState(500);
   const [touchPosition, setTouchPosition] = useState({ x: 0, y: 0 });
-  const [touchPositions, setTouchPositions] = useState([]);
 
   //getItem from localStorage
   useEffect(() => {
@@ -62,7 +61,7 @@ const Earn = () => {
     }
   };
 
-  //ekran yopinga ishlashdigon funksiya
+  //ekran yopilngada ishlashdigon funksiya
   useEffect(() => {
     const handleBeforeUnload = (event) => {
       sendDataToServer();
