@@ -47,15 +47,15 @@ const App = () => {
     <BrowserRouter>
       <div className="container">
         <Routes>
-          <Route path="frens" element={<Frens />} />
-          <Route path="tasks" element={<Tasks />} />
-          <Route path="/" element={<Earn />} />
-          <Route path="boost" element={<Boots />} />
-          <Route path="stats" element={<Stats />} />
+          <Route path="/frens/:id" element={<Frens />} />
+          <Route path="/tasks/:id" element={<Tasks />} />
+          <Route path="/telegram-user/:id" element={<Earn />} />
+          <Route path="/boost/:id" element={<Boots />} />
+          <Route path="/stats/:id" element={<Stats />} />
         </Routes>
 
         <div className="category">
-          <NavLink className="a" to="frens">
+          <NavLink className="a" to="/frens/:idns">
             <svg
               width="29"
               height="19"
@@ -71,7 +71,7 @@ const App = () => {
             <span>Frens</span>
           </NavLink>
 
-          <NavLink className="a" to="tasks">
+          <NavLink className="a" to="/tasks/:id">
             <svg
               width="22"
               height="23"
@@ -102,7 +102,7 @@ const App = () => {
 
           <NavLink
             className="a"
-            to="/"
+            to="/telegram-user/:id"
             style={
               active
                 ? { backgroundColor: "#425BA5" }
@@ -158,7 +158,7 @@ const App = () => {
             <span style={{ width: "30px", textAlign: "center" }}>Earn</span>
           </NavLink>
 
-          <NavLink className="a" to="boost">
+          <NavLink className="a" to="/boost/:id">
             <svg
               width="22"
               height="22"
@@ -183,7 +183,7 @@ const App = () => {
             <span>Boost</span>
           </NavLink>
 
-          <NavLink className="a" to="stats">
+          <NavLink className="a" to="/stats/:id">
             <svg
               width="26"
               height="18"
@@ -194,9 +194,9 @@ const App = () => {
               <path
                 d="M15.6667 1H5C3.75733 1 3.136 1 2.64533 1.20267C2.32182 1.33683 2.0279 1.53341 1.78037 1.78117C1.53284 2.02893 1.33653 2.32303 1.20267 2.64667C1 3.136 1 3.75733 1 5C2.06087 5 3.07828 5.42143 3.82843 6.17157C4.57857 6.92172 5 7.93913 5 9C5 10.0609 4.57857 11.0783 3.82843 11.8284C3.07828 12.5786 2.06087 13 1 13C1 14.2427 1 14.864 1.20267 15.3533C1.33653 15.677 1.53284 15.9711 1.78037 16.2188C2.0279 16.4666 2.32182 16.6632 2.64533 16.7973C3.136 17 3.75733 17 5 17H15.6667M15.6667 1H21C22.2427 1 22.864 1 23.3533 1.20267C23.6771 1.33668 23.9713 1.53319 24.219 1.78096C24.4668 2.02874 24.6633 2.32291 24.7973 2.64667C25 3.136 25 3.75733 25 5C23.9391 5 22.9217 5.42143 22.1716 6.17157C21.4214 6.92172 21 7.93913 21 9C21 10.0609 21.4214 11.0783 22.1716 11.8284C22.9217 12.5786 23.9391 13 25 13C25 14.2427 25 14.864 24.7973 15.3533C24.6633 15.6771 24.4668 15.9713 24.219 16.219C23.9713 16.4668 23.6771 16.6633 23.3533 16.7973C22.864 17 22.2427 17 21 17H15.6667M15.6667 1V17"
                 stroke="#FBD772"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               />
             </svg>
 

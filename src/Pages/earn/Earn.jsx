@@ -1,14 +1,42 @@
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
+import { useParams } from "react-router-dom";
 import "./Earn.css";
 
 const Earn = () => {
-  const [url, setUrl] = useState("http://localhost:3000/coin");
   const [count, setCount] = useState(
     parseInt(localStorage.getItem("count")) || 0
   );
   const [charge, setCharge] = useState(500);
   const [touchPosition, setTouchPosition] = useState({ x: 0, y: 0 });
+
+  const { id } = useParams(); // URL'dan id parametrini olish
+  console.log(id);
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true); // Yuklanish holati
+
+  useEffect(() => {
+    if (id) {
+      // id mavjudligini tekshirish
+      const fetchData = async () => {
+        try {
+          const response = await axios.get(`https://8765-95-214-210-138.ngrok-free.app/api/user-coins/1862168078`);
+          if (response.status === 200 && response.headers['content-type'].includes('application/json')) {
+            setUser(response.data);
+          } else {
+            console.error("Unexpected response format:", response);
+          }
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      fetchData();
+    }
+  }, [id]);
+  console.log(user);
 
   //getItem from localStorage
   useEffect(() => {
@@ -33,12 +61,12 @@ const Earn = () => {
     console.log(event.changedTouches);
 
     let effect = document.querySelector(".coinClick h1");
-    let btn = document.querySelector('.coinClick button')
+    let btn = document.querySelector(".coinClick button");
     effect.classList.remove("effect");
-    btn.classList.remove('scaleEffect')
+    btn.classList.remove("scaleEffect");
     setTimeout(() => {
       effect.classList.add("effect");
-      btn.classList.add('scaleEffect')
+      btn.classList.add("scaleEffect");
     }, 10);
     if (navigator.vibrate) {
       navigator.vibrate(40);
