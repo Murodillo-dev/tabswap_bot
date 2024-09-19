@@ -21,6 +21,10 @@ const Earn = () => {
       const fetchData = async () => {
         try {
           const response = await axios.get(`https://8765-95-214-210-138.ngrok-free.app/api/user-coins/1862168078`);
+          // Status va content-type ni ko'rsatuvchi loglar
+          console.log('Status:', response.status);
+          console.log('Headers:', response.headers['content-type']);
+          
           if (response.status === 200 && response.headers['content-type'].includes('application/json')) {
             setUser(response.data);
           } else {
