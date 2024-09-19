@@ -196,7 +196,7 @@ const Earn = () => {
               pointerEvents: "none", // Kliklarga javob bermasligi uchun
             }}
           >
-            1
+            +1
           </h1>
         </button>
 

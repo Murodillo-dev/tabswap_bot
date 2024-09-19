@@ -18,21 +18,30 @@ const App = () => {
       element.addEventListener("click", (event) => {
         navLinks.forEach((el) => {
           el.classList.remove("selected");
-          el.style.backgroundColor = "";
+          el.style.backgroundColor = ""; // Reset background color
+          el.querySelector("span").classList.remove("selected"); // Ensure span is not selected
+          el.querySelector("svg").classList.remove("selected"); // Ensure svg is not selected
         });
 
-        event.target.classList.add("selected");
-        event.target.style.backgroundColor = "#425BA5";
+        event.currentTarget.classList.add("selected");
+        event.currentTarget.style.backgroundColor = "#425BA5"; // Change the background only for the clicked element
+
+        // Prevent background color from affecting span and svg
+        const span = event.currentTarget.querySelector("span");
+        const svg = event.currentTarget.querySelector("svg");
+
+        if (span) {
+          span.style.backgroundColor = ""; // Keep span's background color unaffected
+        }
+
+        if (svg) {
+          svg.style.backgroundColor = ""; // Keep svg's background color unaffected
+        }
       });
     });
 
     setActive(true);
   }, []);
-
-
-  // window.addEventListener("load", () => {
-    
-  // });
 
   return (
     <BrowserRouter>
@@ -146,7 +155,7 @@ const App = () => {
               </defs>
             </svg>
 
-            <span>Earn</span>
+            <span style={{ width: "30px", textAlign: "center" }}>Earn</span>
           </NavLink>
 
           <NavLink className="a" to="boost">
@@ -202,7 +211,7 @@ const App = () => {
               />
             </svg>
 
-            <span>Stats</span>
+            <span>Bank</span>
           </NavLink>
         </div>
       </div>
