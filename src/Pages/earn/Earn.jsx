@@ -33,9 +33,12 @@ const Earn = () => {
     console.log(event.changedTouches);
 
     let effect = document.querySelector(".coinClick h1");
+    let btn = document.querySelector('.coinClick button')
     effect.classList.remove("effect");
+    btn.classList.remove('scaleEffect')
     setTimeout(() => {
       effect.classList.add("effect");
+      btn.classList.add('scaleEffect')
     }, 10);
     if (navigator.vibrate) {
       navigator.vibrate(40);
