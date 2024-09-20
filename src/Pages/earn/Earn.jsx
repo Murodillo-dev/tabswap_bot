@@ -3,44 +3,71 @@ import React, { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import "./Earn.css";
 
+const url = "https://ba08-37-110-215-4.ngrok-free.app";
+
 const Earn = () => {
   const [count, setCount] = useState(
     parseInt(localStorage.getItem("count")) || 0
   );
-  const [charge, setCharge] = useState(500);
   const [touchPosition, setTouchPosition] = useState({ x: 0, y: 0 });
 
-  const { id } = useParams(); // URL'dan id parametrini olish
-  console.log(id);
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true); // Yuklanish holati
-
+  const [userId, setUserId] = useState(null);
+  const [username, setUsername] = useState(null);
+  const [add_coin, setAddCoin] = useState(1);
+  const [loading, setLoading] = useState(true);
+  const [charge, setCharge] = useState(100); // or any default value
+  const [xato, setXato] = useState("");
+  const [user, setUser] = useState("");
+  const [tanga, setTanga] = useState("");
   useEffect(() => {
-    if (id) {
-      // id mavjudligini tekshirish
-      const fetchData = async () => {
-        try {
-          const response = await axios.get(`https://8765-95-214-210-138.ngrok-free.app/api/user-coins/1862168078`);
-          // Status va content-type ni ko'rsatuvchi loglar
-          console.log('Status:', response.status);
-          console.log('Headers:', response.headers['content-type']);
-          
-          if (response.status === 200 && response.headers['content-type'].includes('application/json')) {
-            setUser(response.data);
-          } else {
-            console.error("Unexpected response format:", response);
-          }
-        } catch (error) {
-          console.error("Error fetching data:", error);
-        } finally {
-          setLoading(false);
-        }
-      };
-
-      fetchData();
+    // Telegram WebApp ob'ektini olish
+    if (window.Telegram && window.Telegram.WebApp) {
+      const tg = window.Telegram.WebApp;
+  
+      // Foydalanuvchi ma'lumotlarini olish
+      if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
+        const user = tg.initDataUnsafe.user;
+        setUserId(user.id);  // userId ni o'rnatish
+        setUsername(user.username);  // username ni o'rnatish
+      } else {
+        setXato("Telegram WebApp ma'lumotlarini olishning imkoni bo'lmadi.");
+        return;  // Foydalanuvchi ma'lumotlari bo'lmasa, fetchData chaqirilmaydi
+      }
+    } else {
+      // Telegram orqali kirmagan bo'lsa
+      console.warn("Telegram orqali kirilmadi.");
+      return;
     }
-  }, [id]);
-  console.log(user);
+  
+    // Foydalanuvchi ID mavjud bo'lsa, ma'lumotlarni olish
+    const fetchData = async () => {
+      try {
+        console.log(`Fetching data for userId: ${userId}`); // Konsolda userId ni tekshirish
+        const response = await axios.get(`${url}/api/user-coins/${userId}/`);
+        
+        if (response.status === 200 && response.headers["content-type"].includes("application/json")) {
+          const userData = response.data;
+          console.log("Foydalanuvchi ma'lumotlari:", userData); // Ma'lumotlarni konsolda tekshirish
+          setUser(userData.user);       // Foydalanuvchi ma'lumotlarini o'rnatish
+          setTanga(userData.coin);      // Foydalanuvchi tangalarini o'rnatish
+          setAddCoin(userData.add_coin); // Qo'shiladigan tangalar soni
+          setCharge(userData.coin);     // Yana bir qiymatni o'rnatish
+        } else {
+          console.error("Unexpected response format:", response);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);  // Yozuvchi yuklanayotgan holatini tugatish
+      }
+    };
+  
+    if (userId) {
+      fetchData();  // userId mavjud bo'lsa, ma'lumotlarni olishni boshlash
+    }
+  
+  }, [userId]);  // useEffect faqat userId o'zgarganda chaqiriladi
+  
 
   //getItem from localStorage
   useEffect(() => {
@@ -56,27 +83,41 @@ const Earn = () => {
   }, [count]);
 
   //ekran bosilganda
-  const handleTouchEnd = (event) => {
+  const handleTouchEnd = async (event) => {
     setTouchPosition({
       x: event.changedTouches[0].clientX - 100,
       y: event.changedTouches[0].clientY - 300,
     });
-    console.log(event.changedTouches);
-    console.log(event.changedTouches);
 
     let effect = document.querySelector(".coinClick h1");
     let btn = document.querySelector(".coinClick button");
     effect.classList.remove("effect");
     btn.classList.remove("scaleEffect");
+
     setTimeout(() => {
       effect.classList.add("effect");
       btn.classList.add("scaleEffect");
     }, 10);
+
     if (navigator.vibrate) {
       navigator.vibrate(40);
     }
-    setCount((prevCount) => prevCount + 1);
-    setCharge(charge - 1);
+
+    setCount((prevCount) => prevCount + add_coin);
+    setCharge(charge - add_coin);
+
+    // // Ma'lumotni serverga yuborish
+    // try {
+    //   const response = await axios.post(`${url}/api/add_coin/${id}/`, {
+    //     coinCount: count + add_coin, // yoki kerakli qiymat
+    //   });
+
+    //   if (response.status === 200) {
+    //     console.log("Coins updated successfully:", response.data);
+    //   }
+    // } catch (error) {
+    //   console.error("Error updating coins:", error);
+    // }
   };
 
   //database ga malumot jonatish
@@ -84,8 +125,8 @@ const Earn = () => {
     const savedCount = localStorage.getItem("count");
     if (savedCount) {
       axios
-        .post(url, {
-          coinCount: parseInt(savedCount),
+        .post(`${url}/api/user-coins/${userId}/`, {
+          coin: parseInt(savedCount),
         })
         .then((response) => {
           console.log("Data successfully sent:", response.data);
@@ -258,10 +299,15 @@ const Earn = () => {
 
           <h2>
             <span className="span1">{charge}</span>/
-            <span className="span2">500</span>
+            <span className="span2">{charge}</span>
           </h2>
         </div>
       </div>
+
+      <p>{userId}</p>
+      <p>{tanga}</p>
+      {/* <p>{add_coin}</p> */}
+      {/* <p>{charge}</p> */}
     </div>
   );
 };
