@@ -10,7 +10,6 @@ const Earn = () => {
     parseInt(localStorage.getItem("count")) || 0
   );
   const [touchPosition, setTouchPosition] = useState({ x: 0, y: 0 });
-
   const [userId, setUserId] = useState(null);
   const [username, setUsername] = useState(null);
   const [add_coin, setAddCoin] = useState(1);
@@ -18,72 +17,70 @@ const Earn = () => {
   const [charge, setCharge] = useState(100); // or any default value
   const [xato, setXato] = useState("");
   const [user, setUser] = useState("");
-  const [tanga, setTanga] = useState("");
+  const [tanga, setTanga] = useState([]);
+
   useEffect(() => {
     // Telegram WebApp ob'ektini olish
+    const tg = window.Telegram.WebApp;
+
     if (window.Telegram && window.Telegram.WebApp) {
-      const tg = window.Telegram.WebApp;
-  
       // Foydalanuvchi ma'lumotlarini olish
       if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
         const user = tg.initDataUnsafe.user;
-        setUserId(user.id);  // userId ni o'rnatish
-        setUsername(user.username);  // username ni o'rnatish
+        setUserId(user.id); // userId ni o'rnatish
+        setUsername(user.username); // username ni o'rnatish
       } else {
         setXato("Telegram WebApp ma'lumotlarini olishning imkoni bo'lmadi.");
-        return;  // Foydalanuvchi ma'lumotlari bo'lmasa, fetchData chaqirilmaydi
       }
     } else {
       // Telegram orqali kirmagan bo'lsa
-      console.warn("Telegram orqali kirilmadi.");
-      return;
-    }
-  
-    // Foydalanuvchi ID mavjud bo'lsa, ma'lumotlarni olish
-    const fetchData = async () => {
-      try {
-        console.log(`Fetching data for userId: ${userId}`); // Konsolda userId ni tekshirish
-        const response = await axios.get(`${url}/api/user-coins/${userId}/`);
-        
-        if (response.status === 200 && response.headers["content-type"].includes("application/json")) {
-          const userData = response.data;
-          console.log("Foydalanuvchi ma'lumotlari:", userData); // Ma'lumotlarni konsolda tekshirish
-          setUser(userData.user);       // Foydalanuvchi ma'lumotlarini o'rnatish
-          setTanga(userData.coin);      // Foydalanuvchi tangalarini o'rnatish
-          setAddCoin(userData.add_coin); // Qo'shiladigan tangalar soni
-          setCharge(userData.coin);     // Yana bir qiymatni o'rnatish
-        } else {
-          console.error("Unexpected response format:", response);
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false);  // Yozuvchi yuklanayotgan holatini tugatish
-      }
-    };
-  
-    if (userId) {
-      fetchData();  // userId mavjud bo'lsa, ma'lumotlarni olishni boshlash
-    }
-  
-  }, [userId]);  // useEffect faqat userId o'zgarganda chaqiriladi
-  
-
-  //getItem from localStorage
-  useEffect(() => {
-    const savedCount = localStorage.getItem("count");
-    if (savedCount) {
-      setCount(parseInt(savedCount));
+      setXato("Telegram orqali kirilmadi.");
     }
   }, []);
 
-  //setItem to localStorage
+  // userId o'zgarganda API chaqirish uchun yangi useEffect
   useEffect(() => {
-    localStorage.setItem("count", count);
-  }, [count]);
+    if (userId) {
+      // userId mavjud bo'lsa, API chaqiramiz
+      axios
+        .get(`${url}/api/user-coins/${userId}/`)
+        .then((response) => {
+          if (
+            response.status === 200 &&
+            response.headers["content-type"].includes("application/json")
+          ) {
+            const userData = response.data;
+            console.log("Foydalanuvchi ma'lumotlari:", userData); // Ma'lumotlarni konsolda tekshirish
+            setUser(userData.user); // Foydalanuvchi ma'lumotlarini o'rnatish
+            setTanga(userData.coin); // Foydalanuvchi tangalarini o'rnatish
+            setAddCoin(userData.add_coin); // Qo'shiladigan tangalar soni
+            setCharge(userData.coin); // Yana bir qiymatni o'rnatish
+          } else {
+            console.error("Unexpected response format:", response);
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+        })
+        .finally(() => {
+          setLoading(false); // Yozuvchi yuklanayotgan holatini tugatish
+        });
+    }
+  }, [userId]); // useEffect faqat userId o'zgarganda chaqiriladi
+
+  console.log(tanga);
 
   //ekran bosilganda
   const handleTouchEnd = async (event) => {
+    if (userId) {
+      axios.post(
+        "https://ba08-37-110-215-4.ngrok-free.app/api/user-coins/1862168078/",
+        {
+          coin: 5,
+        }
+      );
+    }
+
     setTouchPosition({
       x: event.changedTouches[0].clientX - 100,
       y: event.changedTouches[0].clientY - 300,
@@ -105,50 +102,7 @@ const Earn = () => {
 
     setCount((prevCount) => prevCount + add_coin);
     setCharge(charge - add_coin);
-
-    // // Ma'lumotni serverga yuborish
-    // try {
-    //   const response = await axios.post(`${url}/api/add_coin/${id}/`, {
-    //     coinCount: count + add_coin, // yoki kerakli qiymat
-    //   });
-
-    //   if (response.status === 200) {
-    //     console.log("Coins updated successfully:", response.data);
-    //   }
-    // } catch (error) {
-    //   console.error("Error updating coins:", error);
-    // }
   };
-
-  //database ga malumot jonatish
-  const sendDataToServer = () => {
-    const savedCount = localStorage.getItem("count");
-    if (savedCount) {
-      axios
-        .post(`${url}/api/user-coins/${userId}/`, {
-          coin: parseInt(savedCount),
-        })
-        .then((response) => {
-          console.log("Data successfully sent:", response.data);
-        })
-        .catch((error) => {
-          console.error("Error sending data:", error);
-        });
-    }
-  };
-
-  //ekran yopilngada ishlashdigon funksiya
-  useEffect(() => {
-    const handleBeforeUnload = (event) => {
-      sendDataToServer();
-    };
-
-    window.addEventListener("beforeunload", handleBeforeUnload);
-
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    };
-  }, []);
 
   return (
     <div className="earn">
@@ -304,10 +258,16 @@ const Earn = () => {
         </div>
       </div>
 
-      <p>{userId}</p>
-      <p>{tanga}</p>
-      {/* <p>{add_coin}</p> */}
-      {/* <p>{charge}</p> */}
+      <p>userID: {userId}</p>
+      <p>{xato}</p>
+      <p>userName: {username}</p>
+      <p>{user ? JSON.stringify(user) : "User ma'lumotlari yuklanmoqda..."}</p>
+      <p>
+        {tanga}
+        {/* {tanga.length > 0
+          ? JSON.stringify(tanga)
+          : "Tanga ma'lumotlari yuklanmoqda..."} */}
+      </p>
     </div>
   );
 };
