@@ -47,15 +47,15 @@ const App = () => {
     <BrowserRouter>
       <div className="container">
         <Routes>
-          <Route path="/frens/:id" element={<Frens />} />
-          <Route path="/tasks/:id" element={<Tasks />} />
-          <Route path="/telegram-user/:id" element={<Earn />} />
-          <Route path="/boost/:id" element={<Boots />} />
-          <Route path="/stats/:id" element={<Stats />} />
+          <Route path="frens" element={<Frens />} />
+          <Route path="tasks" element={<Tasks />} />
+          <Route path="/" element={<Earn />} />
+          <Route path="boost" element={<Boots />} />
+          <Route path="stats" element={<Stats />} />
         </Routes>
 
         <div className="category">
-          <NavLink className="a" to="/frens/:idns">
+          <NavLink className="a" to="frens">
             <svg
               width="29"
               height="19"
@@ -71,7 +71,7 @@ const App = () => {
             <span>Frens</span>
           </NavLink>
 
-          <NavLink className="a" to="/tasks/:id">
+          <NavLink className="a" to="tasks">
             <svg
               width="22"
               height="23"
@@ -102,7 +102,7 @@ const App = () => {
 
           <NavLink
             className="a"
-            to="/telegram-user/:id"
+            to="/"
             style={
               active
                 ? { backgroundColor: "#425BA5" }
@@ -158,7 +158,7 @@ const App = () => {
             <span style={{ width: "30px", textAlign: "center" }}>Earn</span>
           </NavLink>
 
-          <NavLink className="a" to="/boost/:id">
+          <NavLink className="a" to="boost">
             <svg
               width="22"
               height="22"
@@ -183,7 +183,7 @@ const App = () => {
             <span>Boost</span>
           </NavLink>
 
-          <NavLink className="a" to="/stats/:id">
+          <NavLink className="a" to="stats">
             <svg
               width="26"
               height="18"
