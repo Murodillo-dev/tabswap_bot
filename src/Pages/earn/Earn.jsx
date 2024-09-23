@@ -3,11 +3,9 @@ import React, { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import "./Earn.css";
 
-const url = "https://ba08-37-110-215-4.ngrok-free.app";
+const url = "https://49bb-95-214-211-55.ngrok-free.app";
 
-//mana keldim 
-
-
+//mana keldim
 
 const Earn = () => {
   const [count, setCount] = useState(
@@ -40,51 +38,47 @@ const Earn = () => {
       // Telegram orqali kirmagan bo'lsa
       setXato("Telegram orqali kirilmadi.");
     }
+
+    if (userId) {
+      // userId mavjud bo'lsa, API chaqiramiz
+      axios
+        .get(`${url}api/friends/${userId}`)
+        .then((response) => {
+          if (
+            response.status === 200 &&
+            response.headers["content-type"].includes("application/json")
+          ) {
+            const userData = response.data;
+            console.log("Foydalanuvchi ma'lumotlari:", userData); // Ma'lumotlarni konsolda tekshirish
+            setUser(userData.user); // Foydalanuvchi ma'lumotlarini o'rnatish
+            setTanga(userData.coin); // Foydalanuvchi tangalarini o'rnatish
+            setAddCoin(userData.add_coin); // Qo'shiladigan tangalar soni
+            setCharge(userData.coin); // Yana bir qiymatni o'rnatish
+          } else {
+            console.error("Unexpected response format:", response);
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+        })
+        .finally(() => {
+          setLoading(false); // Yozuvchi yuklanayotgan holatini tugatish
+        });
+    }
   }, []);
 
-  // userId o'zgarganda API chaqirish uchun yangi useEffect
-  // useEffect(() => {
-  //   if (userId) {
-  //     // userId mavjud bo'lsa, API chaqiramiz
-  //     axios
-  //       .get(`https://ba08-37-110-215-4.ngrok-free.app/`)
-  //       .then((response) => {
-  //         if (
-  //           response.status === 200 &&
-  //           response.headers["content-type"].includes("application/json")
-  //         ) {
-  //           const userData = response.data;
-  //           console.log("Foydalanuvchi ma'lumotlari:", userData); // Ma'lumotlarni konsolda tekshirish
-  //           setUser(userData.user); // Foydalanuvchi ma'lumotlarini o'rnatish
-  //           setTanga(userData.coin); // Foydalanuvchi tangalarini o'rnatish
-  //           setAddCoin(userData.add_coin); // Qo'shiladigan tangalar soni
-  //           setCharge(userData.coin); // Yana bir qiymatni o'rnatish
-  //         } else {
-  //           console.error("Unexpected response format:", response);
-  //         }
-  //       })
-  //       .catch((error) => {
-  //         console.error("Error fetching data:", error);
-  //       })
-  //       .finally(() => {
-  //         setLoading(false); // Yozuvchi yuklanayotgan holatini tugatish
-  //       });
-  //   }
-  // }, [userId]); // useEffect faqat userId o'zgarganda chaqiriladi
-
-
-  useEffect(()=>{
-axios.get('https://ba08-37-110-215-4.ngrok-free.app')
-.then(a=>{
-  console.log(a);
-})
-  },[])
-
+  useEffect(() => {
+    axios
+      .get(
+        "https://62e154177ab8f7dbfe74951149185f98.serveo.net/api/friends/1230394567/"
+      )
+      .then((a) => {
+        console.log(a);
+      });
+  }, []);
 
   //ekran bosilganda
   const handleTouchEnd = async (event) => {
-
-
     setTouchPosition({
       x: event.changedTouches[0].clientX - 100,
       y: event.changedTouches[0].clientY - 300,
@@ -277,5 +271,3 @@ axios.get('https://ba08-37-110-215-4.ngrok-free.app')
 };
 
 export default Earn;
-
-
